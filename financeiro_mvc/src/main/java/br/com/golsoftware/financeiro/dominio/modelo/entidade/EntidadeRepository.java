@@ -1,7 +1,7 @@
 package br.com.golsoftware.financeiro.dominio.modelo.entidade;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import br.com.golsoftware.financeiro.infraestrutura.persistencia.MyRepository;
 
-public interface EntidadeRepository extends JpaRepository<Entidade, Long> {
+public interface EntidadeRepository extends MyRepository<Entidade, Long> {
 
 }
