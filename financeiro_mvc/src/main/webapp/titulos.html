@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Títulos</title>
+</head>
+<body>
+
+	<div class="panel panel-default">
+  		<div class="panel-heading">
+    		<h3 class="panel-title">Título</h3>
+  		</div>
+  		<div class="panel-body">
+  		
+    			<form id="titulos">
+					
+					<div class="form-group">
+						<label for="tipo">Tipo</label>
+						<select name="tipo">
+							<option value="0">A Pagar</option>
+							<option value="1">A Receber</option>
+						</select>
+					</div>
+					
+					<div class="form-group">
+						<label for="descricao">Descrição</label>
+						<input type="text" name="descricao" autofocus="autofocus"> 
+					</div>
+					
+					<div class="form-group">
+						<label for="fornecedor">Entidade</label>
+						<input type="text" name="fornecedor.nome" autocomplete="on" title="Digite para autocompletar...">
+						<input type="hidden" name="fornecedor.id">
+					</div>
+					
+					<div class="form-group">
+						<label for="grupodespesa">Grupo de Contas</label> 
+						<input type="text" name="grupoDespesa.descricao" autocomplete="on" title="Digite para autocompletar...">
+						<input type="hidden" name="grupoDespesa.id">
+					</div>
+					
+					<div class="form-group">
+						<label for="dataEmissao">Data de Emissão</label>
+						<input type="text" name="dataEmissao" placeholder="DD/MM/AAAA">
+					</div>
+					
+					<div class="form-group">
+						<label for="dataVencimento">Data de Vencimento</label>
+						<input type="text" name="dataVencimento" placeholder="DD/MM/AAAA"> 
+					</div>
+					
+					<div class="form-group">
+						<label for="valor">Valor</label>
+						<input type="text" name="valor">
+					</div>
+						
+					<a href="#" id="incluirTitulos">Incluir</a>
+					<input type="reset" name="limpar" value="Limpar" class="btn btn-default">
+				</form>
+				
+  		</div>
+	</div>
+	
+	<table id="tabelaTitulos">
+		<thead>
+			<tr>
+				<th>Tipo</th>
+				<th>Descrição</th>
+				<th>Fornecedor</th>
+				<th>Grupo de Despesa</th>
+				<th class="data">Emissão</th>
+				<th class="data">Vencimento</th>
+				<th>Valor</th>
+			</tr>
+		</thead>
+	</table>
+	
+</body>
+</html>

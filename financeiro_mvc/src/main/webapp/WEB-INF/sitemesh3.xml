@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh xmlns="http://www.sitemesh.org/schema/sitemesh-config">>
+	<mapping path="/*" decorator="/decorator.html" />
+</sitemesh>
