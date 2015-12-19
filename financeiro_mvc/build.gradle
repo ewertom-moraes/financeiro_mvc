@@ -18,7 +18,7 @@ targetCompatibility = '1.8'
 flyway {
     url = 'jdbc:postgresql://localhost:5432/financeiro'
     user = 'postgres'
-    password = 'cra@8Ga5'
+    password = 'redeinf123'
 }
 
 // Externalizar configurações do banco

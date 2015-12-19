@@ -51,7 +51,7 @@ public class ConfiguracaoJPA {
 		dataSource.setDriverClassName("org.postgresql.Driver");
 		dataSource.setUrl("jdbc:postgresql://localhost:5432/financeiro");
 		dataSource.setUsername("postgres");
-		dataSource.setPassword("cra@8Ga5");
+		dataSource.setPassword("redeinf123");
 		return dataSource;
 	}
 
