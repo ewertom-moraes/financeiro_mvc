@@ -25,11 +25,13 @@ public class InicializadorWeb implements WebApplicationInitializer {
 		Dynamic servlet = servletContext.addServlet("dispatcher",
 				new DispatcherServlet(ctx));
 		servlet.addMapping("/api/*");
+//		servlet.addMapping("/");
 		servlet.setLoadOnStartup(1);
 
-		servletContext.addFilter("sitemesh", new ConfigurableSiteMeshFilter())
-				.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class),
-						true, "/*");
+		
+//		servletContext.addFilter("sitemesh", new ConfigurableSiteMeshFilter())
+//				.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class),
+//						true, "/*");
 	}
 
 }
