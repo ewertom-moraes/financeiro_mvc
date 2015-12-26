@@ -1,0 +1,97 @@
+
+/* .table-grande{ */
+/* 	width: 90%;  */
+/* 	margin-left: auto;  */
+/* 	margin-right: auto; */
+/* } */
+
+.cursor-pointer{
+	cursor: pointer;
+}
+
+.wtLoop{
+	display: none;
+}
+
+.table thead th{
+	background-color: ;
+}
+
+.col-center{
+	float: none;
+    margin: 0 auto;
+}
+
+.trOrdena th{
+	cursor: pointer;
+	background-color: #ecf0f1;
+}
+
+/* input sm */
+.form-control{
+  height: 35px;
+  padding: 6px 9px;
+  font-size: 13px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+
+form .row{
+	padding-bottom: 11px;
+}
+
+.nowrap{
+	display: flex;
+	white-space: nowrap;
+}
+
+
+/* .chk input[type=radio]{ */
+/* 	visibility: hidden; */
+/* 	margin-right: 8px; */
+/* 	cursor: pointer; */
+/* } */
+
+/* .chk input[type=radio]:before { */
+/* 	content: " "; */
+/* 	background-color: #ccc; */
+/* 	display: inline; */
+/* 	margin-right: 15px; */
+/* 	width: 6px; */
+/* 	height: 6px; */
+/* 	border: 3px solid #fff; */
+/* 	border-radius: 10px; */
+/* 	visibility: visible; */
+/* 	box-shadow: 0 0 0px 2px #999; */
+/* } */
+
+/* .chk input[type=checkbox]{ */
+/* 	visibility: hidden; */
+/* 	margin-right: 8px; */
+/* 	cursor: pointer; */
+/* } */
+
+/* .chk input[type=checkbox]:before { */
+/* 	content: "\0a0"; */
+/* 	display: inline-block; */
+/* 	margin-right: 15px; */
+/* 	width: 12px; */
+/* 	height: 12px; */
+/* 	visibility: visible; */
+/* 	border: 2px dashed #999; */
+/* 	border-radius: 12px; */
+/* 	line-height: 12px; */
+/* 	font-size:14px; */
+/* 	text-align:center; */
+/* 	font-weight: bold; */
+/* 	color: #052; */
+/* } */
+
+/* .chk input[type=checkbox]:checked:before { */
+/* 	content: "\0d7"; */
+/* } */
+
+body{
+/* 	display: none; */
+}
