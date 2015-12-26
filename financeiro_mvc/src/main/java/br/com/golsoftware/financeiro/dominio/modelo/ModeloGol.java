@@ -28,6 +28,32 @@ public class ModeloGol {
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", locale = "pt-BR", timezone = "Brazil/East")
 	private Calendar dataUltimaAtualizacao;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Calendar getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Calendar dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	public Calendar getDataUltimaAtualizacao() {
+		return dataUltimaAtualizacao;
+	}
+
+	public void setDataUltimaAtualizacao(Calendar dataUltimaAtualizacao) {
+		this.dataUltimaAtualizacao = dataUltimaAtualizacao;
+	}
+	
+	
 	
 	
 }

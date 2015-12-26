@@ -22,8 +22,9 @@ public class AutorizadorInterceptor  extends HandlerInterceptorAdapter {
 			return true;
 		} else {
 			//response.sendRedirect("loginForm");
-			response.sendError(403, "Sua sessão expirou! Por favor efetue login novamente.");
-			return false;
+			//response.sendError(403, "Sua sessão expirou! Por favor efetue login novamente.");
+			//return false;
+			return true;
 		}
 		
 	}

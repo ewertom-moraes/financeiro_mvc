@@ -23,7 +23,7 @@ import br.com.golsoftware.financeiro.dominio.modelo.entidade.EntidadeValidator;
 import br.com.golsoftware.financeiro.infraestrutura.web.Requisicao;
 
 @RestController
-@RequestMapping(value = "/entidades")
+@RequestMapping(value = "/entidade")
 public class EntidadeController {
 
 	private EntidadeRepository entidades;
@@ -36,11 +36,11 @@ public class EntidadeController {
 	@InitBinder("entidade")
 	protected void initBinder(WebDataBinder binder) {
 	    binder.addValidators(new EntidadeValidator(entidades));
-	}
+	} 
 	
 	@RequestMapping(value="/planilha")
 	public ModelAndView formPlanilha(){
-		return new ModelAndView("entidades/entidade_planilha");
+		return new ModelAndView("entidade/entidade_planilha");
 	}
 	
 	@RequestMapping( method = RequestMethod.GET)

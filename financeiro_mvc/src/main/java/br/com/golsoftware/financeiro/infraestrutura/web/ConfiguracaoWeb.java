@@ -19,7 +19,7 @@ public class ConfiguracaoWeb extends WebMvcConfigurerAdapter{
 	@Bean
     public InternalResourceViewResolver getInternalResourceViewResolver(){
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("/");
+        resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
         return resolver;
     }

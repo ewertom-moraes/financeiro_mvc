@@ -2,6 +2,7 @@ package br.com.golsoftware.financeiro.dominio.modelo.entidade;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 public class EntidadeValidator implements Validator{
@@ -20,7 +21,12 @@ public class EntidadeValidator implements Validator{
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		
+		Entidade entidade = (Entidade) target;
+		if(entidade.getTipo().name().equals("FISICA")){
+			errors.reject("entidade.CPFFisica");
+		}
+		if(entidade.getTipo().name().equals("JURIDICA")){
+			errors.reject("entidade.CNPJJuridica");
+		}
 	}
-	
 }
