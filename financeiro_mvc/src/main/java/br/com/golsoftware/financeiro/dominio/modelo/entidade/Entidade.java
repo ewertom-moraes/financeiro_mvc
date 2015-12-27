@@ -11,8 +11,6 @@ import org.hibernate.validator.constraints.br.CPF;
 import br.com.golsoftware.financeiro.dominio.modelo.ModeloGol;
 
 @Entity
-@SequenceGenerator(name = "entidade_sequence", sequenceName = "sq_entidade")
-//@Table(schema = "studioplay")
 public class Entidade extends ModeloGol{
 
 //	@Id

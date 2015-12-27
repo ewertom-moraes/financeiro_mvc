@@ -40,14 +40,17 @@ public class RestErrorHandler {
         LOGGER.debug("Handling form validation error");
 
         BindingResult result = ex.getBindingResult();
-        List<FieldError> fieldErrors = result.getFieldErrors();
-        List<ObjectError> globalErrors = result.getGlobalErrors();
-
-        return processFieldErrors(fieldErrors, globalErrors);
+        
+        return processFieldErrors(result);
     }
 
-    private ValidationErrorDTO processFieldErrors(List<FieldError> fieldErrors, List<ObjectError> objectErrors) {
-        ValidationErrorDTO dto = new ValidationErrorDTO();
+    private ValidationErrorDTO processFieldErrors(BindingResult result) {
+        
+    	ValidationErrorDTO dto = new ValidationErrorDTO();
+    	
+    	List<FieldError> fieldErrors = result.getFieldErrors();
+        List<ObjectError> objectErrors = result.getGlobalErrors();
+        dto.setObjectName(result.getObjectName());
 
         for (FieldError fieldError: fieldErrors) {
             String localizedErrorMessage = resolveLocalizedErrorMessage(fieldError);

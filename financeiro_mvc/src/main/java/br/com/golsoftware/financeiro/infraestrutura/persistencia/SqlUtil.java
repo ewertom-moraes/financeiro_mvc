@@ -146,9 +146,9 @@ public class SqlUtil {
 //	}
 	
 	
-	public static void merge(Object obj, Object update, String campos){
+	public static Object merge(Object obj, Object update, String campos){
 	    if(!obj.getClass().isAssignableFrom(update.getClass())){
-	        return;
+	        return null;
 	    }
 	    
 	    campos = campos.toLowerCase();
@@ -175,8 +175,8 @@ public class SqlUtil {
 	        }
 	    }
 	    
-	    if(!obj.getClass().getSuperclass().getClass().getSimpleName().equals("Modelo"))
-	    	return;
+	    if(!obj.getClass().getSuperclass().getClass().getSimpleName().equals("ModeloGol"))
+	    	return obj;
 	    
 	    methods = methodsSuperClass;
 	    for(Method fromMethod: methods){
@@ -197,7 +197,8 @@ public class SqlUtil {
 	            } 
 	        }
 	    }
-
+	    
+	    return obj;
 	}
 	
 	public static Criteria getRestricoes(Criteria ct, HashMap<String, HashMap<String,String>> filtros){

@@ -3,6 +3,7 @@ package br.com.golsoftware.financeiro.dominio.modelo.titulo;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,30 +14,33 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.golsoftware.financeiro.dominio.modelo.GrupoDespesa;
+import br.com.golsoftware.financeiro.dominio.modelo.ModeloGol;
 import br.com.golsoftware.financeiro.dominio.modelo.entidade.Entidade;
+import br.com.golsoftware.financeiro.dominio.modelo.grupodespesa.GrupoDespesa;
 
 @Entity
-@SequenceGenerator(name = "titulo_sequence", sequenceName = "sq_titulo")
 @Table(indexes = { @Index(columnList = "fornecedor_id"),
 		@Index(columnList = "dataVencimento"), @Index(columnList = "tipo") })
-public class Titulo {
+public class Titulo extends ModeloGol{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "titulo_sequence")
-	private Long id;
-
+	@NotNull
 	private TipoTitulo tipo;
 
+	@NotNull
+	private String numeroDocumento;
+	
 	private SituacaoTitulo situacao;
 
 	private String descricao;
 
 	private Documento documento;
 
+	@NotNull
 	@ManyToOne
 	private Entidade fornecedor;
 
@@ -52,18 +56,14 @@ public class Titulo {
 
 	private Parcela parcelado;
 
+	@NotNull
 	private BigDecimal valor;
+	
+	private BigDecimal saldo;
 
+	@NotNull
 	@ManyToOne
 	private GrupoDespesa grupoDespesa;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public TipoTitulo getTipo() {
 		return tipo;
@@ -153,4 +153,23 @@ public class Titulo {
 		this.grupoDespesa = grupoDespesa;
 	}
 
+	public String getNumeroDocumento() {
+		return numeroDocumento;
+	}
+
+	public void setNumeroDocumento(String numeroDocumento) {
+		this.numeroDocumento = numeroDocumento;
+	}
+
+	public BigDecimal getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(BigDecimal saldo) {
+		this.saldo = saldo;
+	}
+
+	
+	
+	
 }

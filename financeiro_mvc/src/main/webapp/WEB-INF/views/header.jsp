@@ -50,41 +50,25 @@ String contextoSis = contextoURL.toString() + "/api/";
 <!--         <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li> -->
 
 		<li class="dropdown">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Cadastros <span class="caret"></span></a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Entidade <span class="caret"></span></a>
 			<ul class="dropdown-menu" role="menu">
-				<li><a href="banda.jsp">Bandas</a></li>
-				<li><a href="musico.jsp">Musicos</a></li>
-				<li><a href="genero.jsp">Generos</a></li>
-				<li><a href="instrumento.jsp">Instrumentos</a></li>
-				<li><a href="sala.jsp">Salas</a></li>
+				<li><a href="<%=contextoSis%>/entidade/planilha">Planilha</a></li>
 			</ul>
 		</li>
 		<li class="dropdown">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Planilhas <span class="caret"></span></a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Titulo <span class="caret"></span></a>
 			<ul class="dropdown-menu" role="menu">
-				<li><a href="<%=contextoSis%>/banda/planilha">Bandas</a></li>
-				<li><a href="<%=contextoSis%>/musico/planilha">Musicos</a></li>
-				<li><a href="<%=contextoSis%>/genero/planilha">Generos</a></li>
-				<li><a href="<%=contextoSis%>/instrumento/planilha">Instrumentos</a></li>
-				<li><a href="<%=contextoSis%>/sala/planilha">Salas</a></li>
-				<li><a href="<%=contextoSis%>/ensaio/planilha">Ensaio</a></li>
+				<li><a href="<%=contextoSis%>/titulo/planilha">Planilha</a></li>
+				<li><a href="<%=contextoSis%>/titulo/porEntidade">Por Entidade</a></li>
+				<li><a href="<%=contextoSis%>/baixa/informarBaixa">Informar Baixa</a></li>
 			</ul>
 		</li>
 		<li class="dropdown">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Consultas <span class="caret"></span></a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tabelas <span class="caret"></span></a>
 			<ul class="dropdown-menu" role="menu">
-				<li><a href="musicos_banda.jsp">Musicos da Banda</a></li>
+				<li><a href="<%=contextoSis%>/grupoDespesa/planilha">Grupo Despesa</a></li>
 			</ul>
 		</li>
-        
-        <li class="dropdown">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Ensaios <span class="caret"></span></a>
-        	<ul class="dropdown-menu" role="menu">
-				 <li><a href="ensaio.jsp">Ensaios</a></li>
-				 <li><a href="calendario_ensaios.jsp">Calendario de Ensaios</a></li>
-			</ul>
-		</li>
-       
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Opções<span class="caret"></span></a>

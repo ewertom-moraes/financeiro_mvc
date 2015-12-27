@@ -30,9 +30,9 @@ extends SimpleJpaRepository<T, ID> implements MyRepository<T, ID> {
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	public <S extends T> S  merge(S novo, String campos, ID id) {
-		SqlUtil.merge(findOne(id), novo, campos);
-		return novo;
+		return (S) SqlUtil.merge(findOne(id), novo, campos);
 	}
 
 	

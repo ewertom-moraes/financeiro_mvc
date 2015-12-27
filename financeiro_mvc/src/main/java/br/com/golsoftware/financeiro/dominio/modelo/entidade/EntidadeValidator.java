@@ -23,10 +23,12 @@ public class EntidadeValidator implements Validator{
 	public void validate(Object target, Errors errors) {
 		Entidade entidade = (Entidade) target;
 		if(entidade.getTipo().name().equals("FISICA")){
-			errors.reject("entidade.CPFFisica");
+			if(entidade.getCpf()==null)
+				errors.reject("entidade.CPFFisica");
 		}
 		if(entidade.getTipo().name().equals("JURIDICA")){
-			errors.reject("entidade.CNPJJuridica");
+			if(entidade.getCnpj()==null)
+				errors.reject("entidade.CNPJJuridica");
 		}
 	}
 }

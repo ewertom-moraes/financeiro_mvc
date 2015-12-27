@@ -73,10 +73,83 @@ var Webtom = function(){
 					error: Webtom.crud.errorCrud
 				});
 			},
-			get : function(elem){
+			
+			geraLista : function(consulta, registros){
+				
+				var lista =  $('[data-ilista="'+consulta.id+'"]');
+				
+				if($(lista).hasClass('lista-refresh')){
+					
+				}
+				$(lista).find('.listagem').remove(); // remove registros de requisicao anterior
+				var wtLoop = $(lista).find('.wtLoop');
+				
+				// loop de registros/ rows da cosulta
+				$(registros).each(function(iregistro, registro){
+					var novaLinha = wtLoop.clone();
+					var dataSubListas = $(novaLinha).find('[data-sub-lista]');
+					$(novaLinha).css({'display' : ''});
+					$(novaLinha).removeClass('wtLoop');
+					$(novaLinha).addClass('listagem');
+					
+					// loop de requisicoes de valores  - wt{campo}
+					$(consulta.campos).each(function(icampo, campo){
+						var valor = "";
+						try {
+							valor = eval("registro."+campo.nome);
+						} catch(err) { valor="";  }
+						
+						if(!valor)
+							valor="";
+						var re = new RegExp('wt{'+campo.nome+'}', "g");
+						$(novaLinha).html($(novaLinha).html().replace(re ,valor));
+						
+					});
+					
+					//loop de data-sub-lista
+					$(dataSubListas).each(function(isub, subLista){
+						var nomeArray = $(subLista).attr('data-sub-lista');
+						var array = null
+						try {
+							array = eval("registro."+nomeArray);
+						} catch (e) { }
+						
+						
+						
+						$(array).each(function(icp, cp){
+							var novaSubLinha = $(subLista).clone();
+							$(novaSubLinha).removeClass('hidden');
+							$(novaSubLinha).removeAttr('data-sub-lista');
+							var wts = $(novaSubLinha).html().match(/wtsub{\S+}/g);
+							$(wts).each(function(){
+								var campo = this.substring(6, this.length-1);
+								var valor = ""
+								try {
+									valor = eval("cp."+campo);
+								} catch (e) {}
+								if(valor){
+									var re = new RegExp(this, "g");
+									$(novaSubLinha).html($(novaSubLinha).html().replace(re ,valor));
+								}
+							});
+							$(novaLinha).find('[data-sub-lista]').eq(isub).parent().append(novaSubLinha);
+						});
+					});
+						
+					// inclui a chave do registo na sua linha
+					$(novaLinha).attr('chave', registro.id);
+					$(novaLinha).attr('value', registro.id);
+					$(wtLoop).parent().append(novaLinha);
+				}); // fim da linha
+				if(valida(funcaoCallBack)){
+					funcaoCallBack.call();
+				}
+			},
+			
+			get : function(listas, elem){
 				var ilista = 0;
 				
-				$(document).find('[data-lista]').each(function(){
+				$(listas).each(function(){
 					ilista++;
 					$(this).attr('data-ilista',$(this).attr('data-lista')+ilista);
 					
@@ -141,89 +214,37 @@ var Webtom = function(){
 					consulta.entidade = entidade;
 					consulta.campos = campos;
 					
-					$.ajax({
-						  dataType: "json", 
-						  contentType: "application/json",
-						  url: CONTEXTO + '/' + APLICACAO + "/"+consulta.entidade,
-						  data: $.customParam(consulta),
-						  async: true,
-						  success: function(registros){
-								
-							var lista =  $('[data-ilista="'+consulta.id+'"]');
-							
-							if($(lista).hasClass('lista-refresh')){
-								
+					var uri = consulta.entidade;
+					
+					if(valida($(this).attr('data-args'))){
+						consulta.entidade += $(this).attr('data-args');
+						console.log('uri = '+consulta.entidade);
+						$.ajax({
+							  dataType: "json", 
+							  contentType: "application/json",
+							  url: CONTEXTO + '/' + APLICACAO + "/"+consulta.entidade,
+							  async: true,
+							  success: function(registros){
+								  Webtom.crud.geraLista(consulta, registros);
+							  },error :function(data, textStatus, errorT){
+								  console.log('erro na funcao get()');
+							  }
+						});
+					} else {
+					
+						$.ajax({
+							  dataType: "json", 
+							  contentType: "application/json",
+							  url: CONTEXTO + '/' + APLICACAO + "/"+consulta.entidade,
+							  data: $.customParam(consulta),
+							  async: true,
+							  success: function(registros){
+								  Webtom.crud.geraLista(consulta, registros);
+							  },error :function(data, textStatus, errorT){
+								console.log('erro na funcao get()');
 							}
-							$(lista).find('.listagem').remove(); // remove registros de requisicao anterior
-							var wtLoop = $(lista).find('.wtLoop');
-							
-							// loop de registros/ rows da cosulta
-							$(registros).each(function(iregistro, registro){
-								var novaLinha = wtLoop.clone();
-								var dataSubListas = $(novaLinha).find('[data-sub-lista]');
-								$(novaLinha).css({'display' : ''});
-								$(novaLinha).removeClass('wtLoop');
-								$(novaLinha).addClass('listagem');
-								
-								// loop de requisicoes de valores  - wt{campo}
-								$(consulta.campos).each(function(icampo, campo){
-									var valor = "";
-									try {
-										valor = eval("registro."+campo.nome);
-									} catch(err) { valor="";  }
-									
-									if(!valor)
-										valor="";
-									var re = new RegExp('wt{'+campo.nome+'}', "g");
-									$(novaLinha).html($(novaLinha).html().replace(re ,valor));
-									
-								});
-								
-								//loop de data-sub-lista
-								$(dataSubListas).each(function(isub, subLista){
-									var nomeArray = $(subLista).attr('data-sub-lista');
-									var array = null
-									try {
-										array = eval("registro."+nomeArray);
-									} catch (e) { }
-									
-									
-									
-									$(array).each(function(icp, cp){
-										var novaSubLinha = $(subLista).clone();
-										$(novaSubLinha).removeClass('hidden');
-										$(novaSubLinha).removeAttr('data-sub-lista');
-										var wts = $(novaSubLinha).html().match(/wtsub{\S+}/g);
-										$(wts).each(function(){
-											var campo = this.substring(6, this.length-1);
-											var valor = ""
-											try {
-												valor = eval("cp."+campo);
-											} catch (e) {}
-											if(valor){
-												var re = new RegExp(this, "g");
-												$(novaSubLinha).html($(novaSubLinha).html().replace(re ,valor));
-											}
-										});
-										$(novaLinha).find('[data-sub-lista]').eq(isub).parent().append(novaSubLinha);
-									});
-								});
-									
-								// inclui a chave do registo na sua linha
-								$(novaLinha).attr('chave', registro.id);
-								$(novaLinha).attr('value', registro.id);
-								$(wtLoop).parent().append(novaLinha);
-							}); // fim da linha
-							if(valida(funcaoCallBack)){
-								funcaoCallBack.call();
-							}
-						},error :function(data, textStatus, errorT){
-							console.log('erro na funcao get()');
-							console.log(data);
-							console.log(textStatus);
-							console.log(errorT);
-						}
-					});
+						});
+					}
 				});
 			},
 			
@@ -259,6 +280,19 @@ var Webtom = function(){
 				});
 			},
 			
+			getRelacao : function(lista, args){
+				var uri = "";
+				if(typeof(args)=="string"){
+					uri += "/"+args;
+				}else{
+					$(args).each(function(){
+						uri += "/"+this;
+					});
+				}
+				$(lista).attr('data-args', uri);
+				Webtom.crud.get(lista);
+			},
+			
 			getOneFromList : function(elem){
 				if(!valida(elem))
 					return;
@@ -282,10 +316,26 @@ var Webtom = function(){
 					success: Webtom.crud.sucessoCrud
 				});
 			},
+			
+			getFieldErro : function(context, name){
+				
+				var field = $(context).find('[name*="'+name+'."]');
+				if(field.length==0)
+					field = $(context).find('[name="'+name+'"]');
+				return field;
+				
+			},
+			
 			errorCrud : function(data, textStatus, errorT){
 				if(valida(data.responseJSON)){
 					
-					var validator = $("form").validate({
+					var form = $('form#'+data.responseJSON.objectName);
+					if(!valida(form)){
+						alert('erros de validação. nao foi possivel encontrar formulario correspondente');
+						return;
+					}
+					
+					var validator = $(form).validate({
 						errorElement: 'span', //default input error message container
 				            errorClass: 'help-block help-block-error', // default input error message class
 				            ignoreTitle: true, // adicionado!
@@ -301,7 +351,7 @@ var Webtom = function(){
 				            success: function (label) {
 				                label.parent().removeClass('has-error'); // set success class to the control group
 				            },
-				            submitHandler: function (form) {
+				            submitHandler: function (formulario) {
 				            }
 					});
 					
@@ -313,22 +363,22 @@ var Webtom = function(){
 							
 							switch (erro.codigo.toLowerCase()) {
 							case "notnull":
-								$("form").find('[name="'+erro.field+'"]').rules("add", {
+								$(Webtom.crud.getFieldErro(form, erro.field)).rules("add", {
 									required : true
 								});
 								break;
 							case "email":
-								$("form").find('[name="'+erro.field+'"]').rules("add", {
+								$(Webtom.crud.getFieldErro(form, erro.field)).rules("add", {
 									email : true
 								});
 								break;
 							case "cpf":
-								$("form").find('[name="'+erro.field+'"]').rules("add", {
+								$(Webtom.crud.getFieldErro(form, erro.field)).rules("add", {
 									cpf : 'valid'
 								});
 								break;
 							case "cnpj":
-								$("form").find('[name="'+erro.field+'"]').rules("add", {
+								$(Webtom.crud.getFieldErro(form, erro.field)).rules("add", {
 									cnpj : 'valid'
 								});
 								break;
@@ -336,22 +386,24 @@ var Webtom = function(){
 								break;
 							}							
 						});
-						$("form").valid();
+						form.valid();  
 					}
 					
 					if(valida(data.responseJSON.objectErrors)){
-						$('.alert-danger', $("form")).removeClass('hidden');
+						$('.alert-danger', form).removeClass('hidden');
 						var ul = $('<ul/>');
 						$(data.responseJSON.objectErrors).each(function(ierro, erro){
 							$(ul).append('<li>'+erro.message + '</li>');
 						});
-						$('form .alert-danger').html(ul);
+						$('.alert-danger #erros', form).html(ul);
+					}else {
+						$('.alert-danger', form).addClass('hidden');
 					}
 				}
 			},
 			sucessoCrud : function(data){
 				$(document).find('.modal').modal('hide');
-				Webtom.crud.get();
+				Webtom.crud.get($(document).find('[data-lista]'));
 			},
 //			postAvatar : function(form){
 //				var data = $(form).find('img').attr('src');
@@ -541,13 +593,13 @@ var Webtom = function(){
 				} 
 			},
 			
-			ordena : function(elem){
+			ordena : function(lista, elem){
 				var ordem = $(elem).attr('ordem'); 
 				if(!valida(ordem) || ordem == "DESC")
 					$(elem).attr('ordem', 'ASC');
 				else if(ordem == "ASC")
 					$(elem).attr('ordem', 'DESC');
-				Webtom.crud.get(elem);
+				Webtom.crud.get(lista, elem);
 			},
 			
 			patterns : function(local){
@@ -671,9 +723,10 @@ var Webtom = function(){
 					
 				$("form").prepend(
 		        	'<div class="alert alert-danger hidden"> '
-					+'<button class="close" data-close="alert"></button>'
-					+'Erros detectados, por favor verifique:'
-				+'</div>');
+						+'<button class="close" data-close="alert"></button>'
+						+'Erros detectados, por favor verifique:'
+						+'<div id="erros"></div>'
+					+'</div>');
 					
 				
 				
@@ -951,10 +1004,10 @@ $(document).ready(function(){
 	Webtom.form.patterns();
 	
 	$("[data-filtro]").on( "change", function() {
-		Webtom.crud.get();          
+		Webtom.crud.get($(this).closest('[data-lista]'));          
 	});
 	$( "[data-ordena]" ).on( "click", function() {
-		Webtom.form.ordena(this);
+		Webtom.form.ordena($(this).closest('[data-lista]'), this);
 	});
 	
 //	$.extend(FormSerializer.patterns, {
@@ -998,5 +1051,5 @@ $(document).ready(function(){
 		if(valida(rotulo))
 			$(this).append('<option class="wtLoop" value=" ">'+rotulo+'</option>'); 
 	});
-	Webtom.crud.get();
+	Webtom.crud.get($(document).find('[data-lista]'));
 });

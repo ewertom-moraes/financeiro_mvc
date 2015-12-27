@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ValidationErrorDTO {
 
+	private String objectName;
 	private List<FieldErrorDTO> fieldErrors = new ArrayList<>();
 	private List<ObjectErrorDTO> objectErrors = new ArrayList<>();
 	
@@ -29,5 +30,15 @@ public class ValidationErrorDTO {
     public List<ObjectErrorDTO> getObjectErrors() {
         return objectErrors;
     }
+
+	public String getObjectName() {
+		return objectName;
+	}
+
+	public void setObjectName(String objectName) {
+		this.objectName = objectName;
+	}
+    
+    
 
 }
